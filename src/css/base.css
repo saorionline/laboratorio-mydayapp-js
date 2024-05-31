@@ -60,7 +60,7 @@ body::before {
 border-radius: 8px;
 box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
 overflow: hidden;
-  margin: 20px 20px 90px 20px;
+  margin: 20px 20px 25px 20px;
 }
 
 .todoapp input::-webkit-input-placeholder {
