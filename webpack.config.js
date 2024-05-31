@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: "production",
@@ -9,6 +10,7 @@ module.exports = {
   output: {
     path: __dirname + "/dist",
     filename: "[name].bundle.js",
+    assetModuleFilename: 'assets/images/[hash][ext][query]',
   },
   devServer: {
     static: {
@@ -22,6 +24,14 @@ module.exports = {
       template: "./src/index.html",
       filename: "index.html",
     }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "src", "assets/images"),
+          to: "assets/images"
+        }
+      ]
+    })
   ],
   module: {
     rules: [
@@ -36,6 +46,17 @@ module.exports = {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-env"],
+          },
+        },
+      },
+      {
+        test: /\.png$/,
+        use: {
+          loader: "file-loader",
+          options: {
+            name: "[name].[ext]",
+            outputPath: "./src/assets/notasks.png",
+            publicPath: "./src/assets/notasks.png",
           },
         },
       },

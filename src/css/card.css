@@ -1,6 +1,6 @@
 .card {
     width: 326px;
-    height: 499px;
+    height: 609px;
     padding: 10px;
     border-radius: 20px;
     border: 0.5px solid rgba(255, 255, 255, 0.20);
@@ -20,3 +20,7 @@ p {
     font-weight: 300;
 }
 
+img {
+    width: 250px;
+    height: 250px;
+}
