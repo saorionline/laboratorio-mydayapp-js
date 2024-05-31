@@ -10,10 +10,12 @@
       href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
       rel="stylesheet"
     />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <title>MyDayApp - JS</title>
   </head>
   <body>
-    <section class="todoapp">
+    <section class="todoapp box">
+      <div class= "card ">
       <header class="header">
         <div class="container">
           <h1>My Day</h1>
@@ -58,7 +60,9 @@
             </li>
           </ul>
         </section>
-        <!-- This footer should be hidden by default and shown when there are todos -->
+       
+      </div>
+         <!-- This footer should be hidden by default and shown when there are todos -->
         <footer class="footer">
           <!-- This should be `0 items left` by default -->
           <span class="todo-count"><strong>0</strong> item left</span>
@@ -74,10 +78,11 @@
               <a href="#/completed">Completed</a>
             </li>
           </ul>
-          <!-- Hidden if no completed items are left ↓ -->
-          <button class="clear-completed">Clear completed</button>
+
         </footer>
-      </div>
+                <!-- Hidden if no completed items are left ↓ -->
+                <button class="clear-completed">Clear completed</button>
+        </div>
     </section>
   </body>
 </html>
