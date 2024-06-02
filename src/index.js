@@ -1,9 +1,19 @@
 import "./css/base.css";
 import "./css/card.css";
 
-import { toggleElements } from "./js/utils";
-import { addNewTodoItem } from './js/utils'; // Assuming your utils.js is in a js subfolder
-import { todoList, newTodoInput } from './js/utils';
-toggleElements();
-// Call the imported function
-addNewTodoItem(todoList, newTodoInput);
+import { TodoList } from './js/utils.js'; // Import the TodoList class
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const newTodoInput = document.getElementById('new-todo');
+  const todoList = document.getElementById('todo-list');
+
+  const todoListInstance = new TodoList(todoList); // Create a TodoList instance
+
+  newTodoInput.addEventListener('keydown', async (event) => {
+    if (event.keyCode === 13) {
+      const newTodoText = newTodoInput.value.trim();
+      await todoListInstance.addTodo(newTodoText);
+      newTodoInput.value = ''; // Clear input after adding
+    }
+  });
+});
