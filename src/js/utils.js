@@ -38,12 +38,31 @@ export function addNewTodoItem(todoListElement, newElement, hasTodos) {
         // Create a new text in console
         console.log("New todo item:", newTodoText);
         // Create a new todo item element
-        const newTodoItem = document.createElement('div');
-        newTodoItem.innerHTML = `<p>${newTodoText}</p>`;
+        const newTodoItem = document.createElement('li');
+        newTodoItem.classList.add('pending');
+        const innerHTML = `
+        <div class="view">
+          <input class="toggle" type="checkbox" />
+          <label>${newTodoText}</label>
+        <button class="destroy"></button>
+        </div>
+        <input class="edit" value="${newTodoText}" /> `;
+        // Set the inner HTML content of the li element
+        newTodoItem.innerHTML = innerHTML;
         // Add the new item to the list
         todoListElement.appendChild(newTodoItem);
         // Clear the input field for the next entry
         newElement.value = '';
+      }
+      else {
+        // Handle empty input case (optional)
+        console.warn("Please enter a todo item.");
+        const messageDiv = document.getElementById('message');
+        if (messageDiv) {
+          messageDiv.textContent = "Please enter a todo item";
+        } else {
+          console.error("Div with id 'message' not found.");
+        }
       }
     }
     if (todoListElement) {
