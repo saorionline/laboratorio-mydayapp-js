@@ -13,15 +13,14 @@ export function toggleElements(hasTodos, footerElement = document.querySelector(
   clearCompletedButtonElement.style.display = hasTodos ? 'block' : 'none';
 }
 
-// Optional: Call the function initially to hide elements if no todos exist
-// toggleElements(false); // Uncomment and replace with your actual logic to check for todos
 
-export function addNewTodoItem(todoListElement, newTodoInputElement) {
-  newTodoInputElement.addEventListener('keydown', function(event) {
+
+/* export function addNewTodoItem(todoListElement, newElement) {
+  newElement.addEventListener('keydown', function(event) {
     // Check for Enter key press (keyCode 13)
     if (event.keyCode === 13) {
       // Get the user input
-      const newTodoText = newTodoInputElement.value.trim();
+      const newTodoText = newElement.value.trim();
 
       if (newTodoText) {
         // Create a new list item (li) element
@@ -32,13 +31,13 @@ export function addNewTodoItem(todoListElement, newTodoInputElement) {
         todoListElement.appendChild(newListItem);
 
         // Clear the input field for the next entry
-        newTodoInputElement.value = '';
+        newElement.value = '';
       }
     }
   });
 }
-
+ */
 // **Debugging Steps** (replace placeholders with your actual selectors)
-if (!todoList || !newTodoInput) {
+/* if (!todoList || !newTodoInput) {
   console.error('Error: Could not find required elements. Check selectors.');
-}
+} */

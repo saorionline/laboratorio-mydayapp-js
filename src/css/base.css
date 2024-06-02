@@ -83,21 +83,30 @@ color: rgba(0, 0, 0, 0.4);
 
 .new-todo{
     display: flex;
-    width: 293px;
-    padding: 4px;
+    width: 243px;
+    height: 30px;
+    padding: 14px;
+    color: white;
+    font-size: 1.5em;
+    font-weight: 100;
     flex-direction: column;
-    align-items: flex-start;
     gap: 4px;
     border-radius: 30px;
     border: 0.5px solid rgba(255, 255, 255, 0.30);
     background: linear-gradient(180deg, rgba(99, 106, 150, 0.40) 0%, rgba(182, 186, 214, 0.25) 100%);
     box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(20px);
 }
 .new-todo:hover {
   /* add hover styles here */
   transform: translateY(-2px);
   cursor: pointer;
+  border: inset 0.5px transparent;
+
+}
+
+/* Added new style for focus state to remove selection border */
+.new-todo:focus {
+  outline: none; /* Remove default outline */
 }
 
 /* To do List Focus*/
