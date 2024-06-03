@@ -12,9 +12,11 @@ export class TodoList {
   }
 
   async addTodo(text) {
-    console.log("New todo item:", text);
-    if (!text) return; // Handle empty text
-
+    if (!text) { 
+    const errorMessageElement = document.getElementById('error-message');
+    errorMessageElement.textContent = "Please fill in the to do item.";
+      return; // Handle empty text
+  }
     const newTodoItem = document.createElement('li');
     newTodoItem.classList.add('pending');
 
@@ -27,9 +29,10 @@ export class TodoList {
       <input class="edit" value="${text}" /> `;
 
     // Set the inner HTML content of the li element (asynchronous)
-    await this.element.appendChild(newTodoItem);
 
     newTodoItem.innerHTML = innerHTML;
+    this.element.appendChild(newTodoItem);
+
     this.hasTodos = this.element.children.length > 0;
     this.updateVisibility();
   }
