@@ -4,7 +4,7 @@ import { applyTaskEvents } from "./manage-check.js";
 
 // Add a new to do from the main app input
 
-export function initNewTaskInputListener(){
+export function initNewTask(){
   const inputElement = document.querySelector(".new-todo");
 
   inputElement.addEventListener("keydown", ev => {
@@ -21,24 +21,24 @@ export function initNewTaskInputListener(){
       addTask(newTask);
       renderTask(newTask);
 
-      const newTaskElement = document.querySelector(`[data-task-id="${newId}"]`)
+      const newTaskElement = document.querySelector(`[data-taskid="${newId}"]`)
       applyTaskEvents(newTaskElement);
     }
   });
 }
     // Assigns events to To Dos
-    export function initAllTasksEvents() {
-      const taskElements = document.querySelectorAll(".todo-list li");
+export function initAllToDos() {
+  const taskElements = document.querySelectorAll(".todo-list li");
+  taskElements.forEach(taskElement => applyTaskEvents(taskElement));
+}
 
-      taskElements.forEach(taskElement => applyTaskEvents(taskElement));
-    }
 // Render a single task
 function renderTask(task) { //task
   const textBox = document.querySelector('.todo-list'); //taskContainer
 
   let textHTML = `
     <li class="${task.completed ? "completed" :""}" 
-    data-task-id=${task.id}
+    data-taskid=${task.id}
     data-task-state="${task.completed === false ? "pending": "completed"}">
       <div class="view">
         <input class="toggle" type="checkbox" ${task.completed ? "checked":""}>
@@ -54,11 +54,11 @@ function renderTask(task) { //task
 // Render all tasks
 
 export function renderAllTasks(){
-  const textList = getTasks() 
+  const todosList = getTasks() //tasksList
   const textBox = document.querySelector(".todo-list");
 
   textBox.innerHTML = "";
-  textList.forEach(task => {
+  todosList.forEach(task => {
     renderTask(task)
   });
 }

@@ -3,19 +3,30 @@ import "./css/card.css";
 
 import { 
   renderAllTasks, 
-  initAllTasksEvents, 
-  initNewTaskInputListener 
+  initAllToDos, 
+  initNewTask 
 } from './js/utils.js';
 
+import { 
+  updateTask, 
+}
+from './js/handle-tasks.js';
 
+import { 
+  changeVisual,
+  checkState,
+  checkCompleted, 
+}
+from './js/manage-check.js';
 
 function init() {
   //Render the current tasks
   renderAllTasks();
-  // Starting event listeners 
-  initNewTaskInputListener();
 
-  initAllTasksEvents();
+  // Starting event listeners 
+  initNewTask();
+
+  initAllToDos();
 }
 init();
  
