@@ -3,30 +3,45 @@ import "./css/card.css";
 
 import { 
   renderAllTasks, 
-  initAllToDos, 
-  initNewTask 
 } from './js/utils.js';
 
 import { 
-  updateTask, 
+  updateCount, 
+  filterReady,
 }
-from './js/handle-tasks.js';
+from "./js/second-update-tasks.js";
 
 import { 
-  changeVisual,
-  checkState,
-  checkCompleted, 
+  checkTasks,
+  completedCount, 
 }
-from './js/manage-check.js';
+from "./js/third-check-tasks.js";
+
+import {
+  loadAllToDos,
+  loadNewTask,
+  loadFilter,
+  loadClearDone,
+}
+from "./js/closed-cycle.js";
 
 function init() {
   //Render the current tasks
   renderAllTasks();
+  // Updating the pending tasks counter
+  updateCount();
+  // Checking if any filter should be applied when the application loads
+  filterReady();
+  // Checking if there are tasks available in order to show the footer
+  checkTasks();
+  // Checking if there are completed tasks in order to show the "clear completed" button
+  completedCount();  
 
   // Starting event listeners 
-  initNewTask();
-
-  initAllToDos();
+  loadAllToDos();
+  loadNewTask();
+  loadFilter();
+  loadClearDone();
 }
 init();
  

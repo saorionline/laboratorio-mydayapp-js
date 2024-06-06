@@ -1,39 +1,24 @@
-import { addTask, getTasks } from "./handle-tasks.js";
-import { applyTaskEvents } from "./manage-check.js";
+import { updateTasksList } from "./second-update-tasks.js";
 
 
-// Add a new to do from the main app input
+export function getTasks() {
+  /** @type {Array<Task>}*/
+  let todosList;
 
-export function initNewTask(){
-  const inputElement = document.querySelector(".new-todo");
+  // Checking if the tasks already exist in localstorage if not creating a new default list
+  const stringTasks = localStorage.getItem("mydayapp-js")
+  if (stringTasks != undefined) {
+    todosList = JSON.parse(stringTasks)
+  } else {
+    todosList = [];
+     localStorage.setItem("mydayapp-js", JSON.stringify([]));
+  }
 
-  inputElement.addEventListener("keydown", ev => {
-    const retrievedText = inputElement.value.trim(); //trimmedTitle replace with retrievedText
-    if (ev.key === "Enter" && retrievedText != "") {
-      const tasks = getTasks();
-      // Assign id to the to do
-      const newId = tasks.length == 0 ? 0 : tasks[tasks.length -1].id + 1;
-      const newTask = {
-        id: newId,
-        text: retrievedText, //title replaced with text,
-        completed: false
-      };
-      addTask(newTask);
-      renderTask(newTask);
-
-      const newTaskElement = document.querySelector(`[data-taskid="${newId}"]`)
-      applyTaskEvents(newTaskElement);
-    }
-  });
-}
-    // Assigns events to To Dos
-export function initAllToDos() {
-  const taskElements = document.querySelectorAll(".todo-list li");
-  taskElements.forEach(taskElement => applyTaskEvents(taskElement));
+  return todosList;
 }
 
 // Render a single task
-function renderTask(task) { //task
+export function renderTask(task) { //task
   const textBox = document.querySelector('.todo-list'); //taskContainer
 
   let textHTML = `
@@ -62,6 +47,51 @@ export function renderAllTasks(){
     renderTask(task)
   });
 }
+/**
+ * Hides an element using its class or id
+ * @param {string} elementSelector 
+ */
+export function hideElement(elementSelector) {
+  let elementToHide = document.querySelector(elementSelector);
+  elementToHide.classList.add("hidden");
+}
+
+/**
+* Shows a hidden element using its class or id
+* @param {string} elementSelector 
+*/
+export function showElement(elementSelector) {
+  let elementToShow = document.querySelector(elementSelector);
+  elementToShow.classList.remove("hidden");
+}
 
 
+  /**
+ * Deletes a task by id
+ * @param {number} deleteTaskId 
+ */
+  export function deleteTask(deleteTaskId) {
+    let todosList = getTasks();
+ 
+    let listWithDeleted = todosList.filter(task => task.id != deleteTaskId);
+ 
+    updateTasksList(listWithDeleted);
+ }
+ 
+ /**
+  * Deletes all the tasks completed
+  */
+ export function deleteAllCompletedTasks() {
+    let todosList = getTasks();
+ 
+    let pendingTasksList = todosList.filter(task => task.completed != true);
+ 
+    updateTasksList(pendingTasksList);
+ }
+
+ export function initFilterChangeListener() {
+   window.addEventListener("hashchange", _ => {
+      checkFilterApplied();
+   });
+}
 
