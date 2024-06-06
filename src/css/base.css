@@ -13,7 +13,6 @@ body {
 
 .container {
   display: ruby-text;
-  text-align: -webkit-center;
 }
 
 button {
@@ -88,7 +87,7 @@ color: rgba(0, 0, 0, 0.4);
     width: 243px;
     height: 30px;
     padding: 14px;
-    margin: 40px 0px 10px 0px; 
+    margin: 40px 0px 10px 20px; 
     color: white;
     font-size: 1.5em;
     font-weight: 100;
@@ -111,19 +110,24 @@ color: rgba(0, 0, 0, 0.4);
 .new-todo:focus {
   outline: none; /* Remove default outline */
 }
-
+ul:hover {
+  transform: translateY(-2px);
+  cursor: pointer;
+  font-weight: bold; /* Bold text on hover for emphasis */
+}
 /* To do List Focus*/
 .todo-list {
-margin: 10px;
-padding: 10px;
+margin: 0px;
+padding: 0px;
 list-style: none;
+
 }
 
 .todo-list li {
 position: relative;
 font-size: inherit;
-padding: 0rem 1rem;
 }
+  
 
 .todo-list li:last-child {
 border-bottom: none;

@@ -58,7 +58,6 @@ export function hideElement(elementSelector) {
 
 /**
 * Shows a hidden element using its class or id
-* @param {string} elementSelector 
 */
 export function showElement(elementSelector) {
   let elementToShow = document.querySelector(elementSelector);
@@ -88,10 +87,4 @@ export function showElement(elementSelector) {
  
     updateTasksList(pendingTasksList);
  }
-
- export function initFilterChangeListener() {
-   window.addEventListener("hashchange", _ => {
-      checkFilterApplied();
-   });
-}
 

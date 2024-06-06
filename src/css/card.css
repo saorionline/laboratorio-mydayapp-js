@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     width: 326px;
-    height: 609px;
+    height: auto;
     padding: 10px;
     border-radius: 20px;
     border: 0.5px solid rgba(255, 255, 255, 0.20);
@@ -42,4 +42,7 @@ h1 {
 }
 .hidden {
     display: none;
-  }
+}
+li:hover{
+    cursor: pointer;
+}

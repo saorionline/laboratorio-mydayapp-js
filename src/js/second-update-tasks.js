@@ -48,7 +48,7 @@ export function updateTask(newInfo, taskId) { //newTaskInfo
       todosList[getUpdate].completed = newInfo.completed;
    }
 
-   updateTasksList(tasks);
+   updateTasksList(todosList);
 }
 
 

@@ -3,15 +3,17 @@ console.log("Third Stage Check loaded!");
 import { hideElement, showElement } from "./utils.js"
 
 
- export function checkTasks(){ //chechTasksCount
+export function checkTasks(){ //chechTasksCount
       let tasksCount = document.querySelectorAll(".todo-list li").length;
    
       if (tasksCount == 0) {
          hideElement(".main");
          hideElement(".footer");
+         showElement(".img");
       } else {
          showElement(".main");
          showElement(".footer");
+         hideElement(".img");
       }
    }
 
