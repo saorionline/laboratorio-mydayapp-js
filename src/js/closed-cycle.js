@@ -1,40 +1,16 @@
 console.log("Last Stage Check loaded!");
 
-import { filterReady, updateTask, updateTasksList } from "./second-update-tasks.js";
-import { changeVisual, completedCount, checkTasks } from "./third-check-tasks.js";
-import { getTasks, renderTask, renderAllTasks, deleteAllCompletedTasks } from "./utils.js"
+import { filterReady, updateTasksList, updateCount } from "./second-update-tasks.js";
+import { completedCount, checkTasks } from "./third-check-tasks.js";
+import { getTasks, renderTask, renderAllTasks, deleteAllTasks } from "./utils.js"
+import { applyEvents } from "./fourth-apply-events.js"
 
 
-
-// Add a new to do from the main app input
-export function applyTaskEvents(taskElement) {
-    const taskId = taskElement.dataset.taskid;
- 
-    const checkbox = taskElement.querySelector("input.toggle");
- 
-    // Event handlers
-    const checkboxHandler = _ => {
-
-       if (checkbox.checked) {
-          changeVisual(taskElement,"completed");//changeVisualTaskState
-          updateTask({completed: true}, taskId);
-       } else {
-          changeVisual(taskElement,"pending");
-          updateTask({completed: false}, taskId);
-       }
- 
-    }
- 
-    // Event listeners
-    checkbox.addEventListener("change", checkboxHandler);
-    completedCount();
-    checkTasks();
- }
 
 // Assigns events to To Dos
 export function loadAllToDos() {
     const taskElements = document.querySelectorAll(".todo-list li");
-    taskElements.forEach(taskElement => applyTaskEvents(taskElement));
+    taskElements.forEach(taskElement => applyEvents(taskElement));
 }
     
      
@@ -46,7 +22,7 @@ export function addTask(task) {
     updateTasksList([...getTasks(), task]);
  }
 
-// Letting the user compensate the issue
+// Letting the user compensate the mistake
 function clearWarningMessage() {
    const messageDiv = document.getElementById('error-message');
    if (messageDiv) {
@@ -63,7 +39,7 @@ export function loadNewTask(){
       clearTimeout(timeoutId); // Clear any previous timeout
       timeoutId = setTimeout(() => {
          clearWarningMessage(); // Call the function to clear the message
-      }, 500); // Set a delay of 200 milliseconds (adjust as needed)
+      }, 200); // Set a delay of 200 milliseconds (adjust as needed)
 
     });
 
@@ -87,11 +63,13 @@ export function loadNewTask(){
         };
         addTask(newTask);
         renderTask(newTask);
-        inputElement.value = "";
+        
         const newTaskElement = document.querySelector(`[data-taskid="${newId}"]`)
-        applyTaskEvents(newTaskElement);
+        applyEvents(newTaskElement);
 
         inputElement.value = "";
+        updateCount();
+        checkTasks();
 
       }
     });
@@ -107,7 +85,7 @@ export function loadNewTask(){
     const clearButton = document.querySelector(".clear-completed");
  
     clearButton.addEventListener("click", () => {
-       deleteAllCompletedTasks();
+       deleteAllTasks();
        renderAllTasks();
        loadAllToDos();
        checkTasks();

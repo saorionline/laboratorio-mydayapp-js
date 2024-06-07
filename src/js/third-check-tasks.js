@@ -1,5 +1,6 @@
 console.log("Third Stage Check loaded!");
 
+import { filterReady } from "./second-update-tasks.js";
 import { hideElement, showElement } from "./utils.js"
 
 
@@ -37,5 +38,6 @@ export function changeVisual(taskElement, newStatus){
       taskElement.classList.add(newStatus);
    }
    taskElement.dataset.taskState = newStatus;
-   completedCount(); //checkCompletedTasksCount
+   filterReady();
+   completedCount(); 
 }

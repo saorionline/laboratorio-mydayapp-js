@@ -41,14 +41,17 @@ export function updateTasksList(updatedList) {
 *  @param {number} taskId
 */
 export function updateTask(newInfo, taskId) { //newTaskInfo
-   let todosList = getTasks(); //tasks
+   let updateList = getTasks(); //tasks
 
-   let getUpdate = todosList.findIndex(task => task.id == taskId); //indexToEdit
+   let getUpdate = updateList.findIndex(task => task.id == taskId); //indexToEdit
    if (typeof newInfo.completed === "boolean") {
-      todosList[getUpdate].completed = newInfo.completed;
+      updateList[getUpdate].completed = newInfo.completed;
    }
+   if (newInfo.text) {
+      updateList[getUpdate].text = newInfo.text;
+   }   
 
-   updateTasksList(todosList);
+   updateTasksList(updateList);
 }
 
 
@@ -82,7 +85,7 @@ export function filterTasks(filter) {
          break;
    }
 }
-export function filterReady() {
+export function filterReady() { //check filter applied
    let filter = window.location.hash;
    console.log("filter: ", filter);
    if (filter == "#/" || filter == "") {

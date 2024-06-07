@@ -110,11 +110,7 @@ color: rgba(0, 0, 0, 0.4);
 .new-todo:focus {
   outline: none; /* Remove default outline */
 }
-ul:hover {
-  transform: translateY(-2px);
-  cursor: pointer;
-  font-weight: bold; /* Bold text on hover for emphasis */
-}
+
 /* To do List Focus*/
 .todo-list {
 margin: 0px;
@@ -126,6 +122,8 @@ list-style: none;
 .todo-list li {
 position: relative;
 font-size: inherit;
+transform: translateY(-2px);
+
 }
   
 
@@ -262,7 +260,6 @@ margin-bottom: -1px;
   text-align: left;
   border-radius: 30px;
   border: 0.5px solid rgba(255, 255, 255, 0.30);
-  background: rgba(255, 255, 255, 0.20);
   box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(20px);
   }
@@ -289,7 +286,7 @@ margin-bottom: -1px;
   }
   
   .filters li a {
-    color: rgba(0, 207, 253, 0.70);
+    color: #38238c;
     text-decoration: none;
     font-size: 13px;
     font-style: normal;
@@ -299,11 +296,7 @@ margin-bottom: -1px;
   }
   
   .filters li a:hover {
-  border-color: #6e49fe;
-  }
-  
-  .filters li a.selected {
-  border-color: #4c33b1;
+  color: rgba(0, 207, 253, 0.70);
   }
   
   .clear-completed,

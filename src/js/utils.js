@@ -70,9 +70,9 @@ export function showElement(elementSelector) {
  * @param {number} deleteTaskId 
  */
   export function deleteTask(deleteTaskId) {
-    let todosList = getTasks();
+    let deleteList = getTasks();
  
-    let listWithDeleted = todosList.filter(task => task.id != deleteTaskId);
+    let listWithDeleted = deleteList.filter(task => task.id != deleteTaskId);
  
     updateTasksList(listWithDeleted);
  }
@@ -80,10 +80,10 @@ export function showElement(elementSelector) {
  /**
   * Deletes all the tasks completed
   */
- export function deleteAllCompletedTasks() {
-    let todosList = getTasks();
+ export function deleteAllTasks() {
+    let deleteList = getTasks();
  
-    let pendingTasksList = todosList.filter(task => task.completed != true);
+    let pendingTasksList = deleteList.filter(task => task.completed != true);
  
     updateTasksList(pendingTasksList);
  }
