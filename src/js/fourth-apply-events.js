@@ -1,11 +1,11 @@
+console.log("Fourth loaded!");
+
 import { updateTask, updateCount } from "./second-update-tasks.js";
 import { changeVisual, completedCount, checkTasks } from "./third-check-tasks.js";
+/** Applies all the necessary event listeners for a task to be interactive
+* @param {HTMLLIElement} taskElement
+*/
 
-
-/**
- * Applies all the necessary event listeners for a task to be interactive
- * @param {HTMLLIElement} taskElement
- */
 
 // Add a new to do from the main app input
 export function applyEvents(taskElement) {
@@ -19,9 +19,12 @@ export function applyEvents(taskElement) {
     
    
    // Event handlers
-    const checkboxHandler = _ => {
-
+    const checkboxHandler = () => {
+      const completed = checkbox.checked ? true : false; ;
+      updateTask({completed}, taskId);
        if (checkbox.checked) {
+         console.log("Handle Double Click!");
+
           changeVisual(taskElement,"completed");
           updateTask({completed: true}, taskId);
        } else {
@@ -29,12 +32,12 @@ export function applyEvents(taskElement) {
           updateTask({completed: false}, taskId);
        }
        updateCount();
-    }
+    };
     //Edit
-const editKeyPressHandler = ev => {
-    const keyPressed = ev.key;
+   const editHandler = (ev) => {
+   const keyPressed = ev.key;
   
-        if (keyPressed == "Enter") {
+   if (keyPressed == "Enter") {
            const retrievedText = textInput.value.trim();
   
            updateTask({text: retrievedText}, taskId);
@@ -42,36 +45,48 @@ const editKeyPressHandler = ev => {
            textInput.value = retrievedText;
            taskElement.classList.remove("editing");
   
-           textInput.removeEventListener("keydown", editKeyPressHandler);
+           textInput.removeEventListener("keydown", editHandler);
+           ev.stopPropagation(); // Prevent bubbling up
+
         }
   
         if (keyPressed == "Escape") {
            textInput.value = label.innerText;
            taskElement.classList.remove("editing");
-           textInput.removeEventListener("keydown", editKeyPressHandler);
+           textInput.removeEventListener("keydown", editHandler);
         }
-     }    
-// Label
-const labelDblClickHandler = _ => {
-    changeVisual(taskElement, "editing");
+     };    
 
-    textInput.focus();
-    textInput.addEventListener("keydown", editKeyPressHandler);
- }
+//Label
+const handleDoubleClick = (event) => {
+   changeVisual(taskElement, "editing");
+
+   textInput.focus();
+   textInput.addEventListener("keydown", editHandler);
+   event.stopPropagation(); // Prevent bubbling up
+
+}
+
+
 //Delete
-const destroyTaskHandler = _ => {
-    // removing all the event listeners of the task
+const destroyToDo = (event) => {
+    
+   console.log("Delete clicked!")
+
+   // removing all the event listeners of the task
+    
     checkbox.removeEventListener("change", checkboxHandler);
-    label.removeEventListener("dblclick", labelDblClickHandler);
-    destroyButton.removeEventListener("click", destroyTaskHandler);
+    label.removeEventListener("dblclick", handleDoubleClick);
+    destroyButton.removeEventListener("click", destroyToDo);
+    event.stopPropagation(); // Prevent bubbling up
 
     // removing the task from the local storage list and the ui
     deleteTask(taskId);
     taskElement.remove();
     updateCount();
     checkTasks();
- }     
-
+ };   
+ 
 
     // Event listeners
     checkbox.addEventListener("change", checkboxHandler);

@@ -1,10 +1,15 @@
 console.log("Third Stage Check loaded!");
 
+/**
+ * Applies all the necessary event listeners for a task to be interactive
+ * @param {HTMLLIElement} taskElement
+ */
+
 import { filterReady } from "./second-update-tasks.js";
 import { hideElement, showElement } from "./utils.js"
 
 
-export function checkTasks(){ //chechTasksCount
+export function checkTasks(){
       let tasksCount = document.querySelectorAll(".todo-list li").length;
    
       if (tasksCount == 0) {
@@ -18,7 +23,7 @@ export function checkTasks(){ //chechTasksCount
       }
    }
 
-export function completedCount() { //checkCompletedTasksCount
+export function completedCount() {
       const completedToDos = document.querySelectorAll(".todo-list li.completed").length;
    
       if (completedToDos == 0) {
@@ -29,8 +34,7 @@ export function completedCount() { //checkCompletedTasksCount
    }
 
 export function changeVisual(taskElement, newStatus){
-   if (newStatus != "editing") {
-      // Removing the previous class
+   if (newStatus !== "editing") {
       taskElement.classList.remove("completed");
    }
 

@@ -3,18 +3,18 @@ import { updateTasksList } from "./second-update-tasks.js";
 
 export function getTasks() {
   /** @type {Array<Task>}*/
-  let todosList;
+  let tasks;
 
   // Checking if the tasks already exist in localstorage if not creating a new default list
   const stringTasks = localStorage.getItem("mydayapp-js")
   if (stringTasks != undefined) {
-    todosList = JSON.parse(stringTasks)
+    tasks = JSON.parse(stringTasks)
   } else {
-    todosList = [];
+    tasks = [];
      localStorage.setItem("mydayapp-js", JSON.stringify([]));
   }
 
-  return todosList;
+  return tasks;
 }
 
 // Render a single task
@@ -39,11 +39,11 @@ export function renderTask(task) { //task
 // Render all tasks
 
 export function renderAllTasks(){
-  const todosList = getTasks() //tasksList
+  const tasks = getTasks() //tasksList
   const textBox = document.querySelector(".todo-list");
 
   textBox.innerHTML = "";
-  todosList.forEach(task => {
+  tasks.forEach(task => {
     renderTask(task)
   });
 }
@@ -70,9 +70,9 @@ export function showElement(elementSelector) {
  * @param {number} deleteTaskId 
  */
   export function deleteTask(deleteTaskId) {
-    let deleteList = getTasks();
+    let tasks = getTasks();
  
-    let listWithDeleted = deleteList.filter(task => task.id != deleteTaskId);
+    let listWithDeleted = tasks.filter(task => task.id != deleteTaskId);
  
     updateTasksList(listWithDeleted);
  }
@@ -81,9 +81,9 @@ export function showElement(elementSelector) {
   * Deletes all the tasks completed
   */
  export function deleteAllTasks() {
-    let deleteList = getTasks();
+    let tasks = getTasks();
  
-    let pendingTasksList = deleteList.filter(task => task.completed != true);
+    let pendingTasksList = tasks.filter(task => task.completed != true);
  
     updateTasksList(pendingTasksList);
  }

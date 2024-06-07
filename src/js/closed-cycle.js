@@ -1,11 +1,13 @@
-console.log("Last Stage Check loaded!");
-
+console.log("Last Stage loaded!");
+import { getTasks, renderTask, renderAllTasks, deleteAllTasks } from "./utils.js"
 import { filterReady, updateTasksList, updateCount } from "./second-update-tasks.js";
 import { completedCount, checkTasks } from "./third-check-tasks.js";
-import { getTasks, renderTask, renderAllTasks, deleteAllTasks } from "./utils.js"
 import { applyEvents } from "./fourth-apply-events.js"
 
-
+/**
+ * Applies all the necessary event listeners for a task to be interactive
+ * @param {HTMLLIElement} taskElement
+ */
 
 // Assigns events to To Dos
 export function loadAllToDos() {
@@ -39,7 +41,7 @@ export function loadNewTask(){
       clearTimeout(timeoutId); // Clear any previous timeout
       timeoutId = setTimeout(() => {
          clearWarningMessage(); // Call the function to clear the message
-      }, 200); // Set a delay of 200 milliseconds (adjust as needed)
+      }, 400); // Set a delay of 200 milliseconds (adjust as needed)
 
     });
 
@@ -53,9 +55,9 @@ export function loadNewTask(){
            messageDiv.textContent = "Please enter a todo item";
          }
       } else if (ev.key === "Enter") {
-        const todosList = getTasks();
+        const tasks = getTasks();
         // Assign id to the to do
-        const newId = todosList.length == 0 ? 0 : todosList[todosList.length -1].id + 1;
+        const newId = tasks.length == 0 ? 0 : tasks[tasks.length -1].id + 1;
         const newTask = {
           id: newId,
           text: retrievedText, //title replaced with text,
@@ -76,7 +78,7 @@ export function loadNewTask(){
   }
 
   export function loadFilter() {
-    window.addEventListener("hashchange", _ => {
+    window.addEventListener("hashchange", () => {
        filterReady();
     });
  }

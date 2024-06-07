@@ -1,5 +1,10 @@
 console.log("Second Stage Update loaded!");
 
+/**
+ * Applies all the necessary event listeners for a task to be interactive
+ * @param {HTMLLIElement} taskElement
+ */
+
 import { getTasks } from "./utils.js"
 // This file handles the persistance in localStorage
 
@@ -40,18 +45,18 @@ export function updateTasksList(updatedList) {
 *  @param {TaskInfo} newInfo 
 *  @param {number} taskId
 */
-export function updateTask(newInfo, taskId) { //newTaskInfo
-   let updateList = getTasks(); //tasks
+export function updateTask(newInfo, taskId) {
+   let tasks = getTasks(); 
 
-   let getUpdate = updateList.findIndex(task => task.id == taskId); //indexToEdit
+   let getUpdate = tasks.findIndex(task => task.id == taskId);
    if (typeof newInfo.completed === "boolean") {
-      updateList[getUpdate].completed = newInfo.completed;
+      tasks[getUpdate].completed = newInfo.completed;
    }
    if (newInfo.text) {
-      updateList[getUpdate].text = newInfo.text;
+      tasks[getUpdate].text = newInfo.text;
    }   
 
-   updateTasksList(updateList);
+   updateTasksList(tasks);
 }
 
 
