@@ -39,10 +39,13 @@ export const showContent = () => {
   
   
 export const showClearButton = (items) => {
+  const footerHidden = document.querySelector('.footer');
+        
     const button = document.querySelector(".clear-completed");
     const completedItems = items.filter((e) => e.completed);
     if (completedItems.length > 0) {
       button.style.display = "block";
+      footerHidden.style.display = "block";
     } else {
       button.style.display = "none";
     }

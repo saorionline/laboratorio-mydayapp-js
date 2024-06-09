@@ -47,20 +47,8 @@ if (imageBox) { // Check if element exists
 }
 
 
-/* const imgElement = document.querySelector('img.img'); // Select the image element
-
-  const items = localStorage.getItem("mydayapp-js");
-  const parsedItems = items ? JSON.parse(items) : null;
-  
-  if (parsedItems) {
-    imgElement.style.display = "none"; // Hide the image if items exist
-  } else {
-    imgElement.style.display = "block"; // Show the image if no items exist
-  }
-
-window.onload = () => {
+/* window.onload = () => {
     checkItems();
-
 }; */
 const input = document.querySelector(".new-todo");
 
@@ -78,7 +66,8 @@ if (input) {
   });
 
 }
-
+const footerHidden = document.querySelector('.footer');
+footerHidden.style.display = "none";
 const button = document.querySelector(".clear-completed");
 button.style.display = "none";
 

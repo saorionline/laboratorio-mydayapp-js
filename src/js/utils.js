@@ -15,7 +15,7 @@ export const addTask = (value) => {
     id: "task1",
     title: value,
     completed: false,
-  }; // Pending optimize not generating an Empty Task by default
+  }; // Pending optimize not generating an Empty Task by default */
   renderItem(newItem, fragment);
   container.appendChild(fragment);
   if (!items || items.length === 0) {
@@ -25,6 +25,7 @@ export const addTask = (value) => {
     showClearButton([newItem]);
   } else {
     newItem.id = `task${items.length + 1}`;
+
     localStorage.setItem("mydayapp-js", JSON.stringify([...items, newItem]));
     updateTotalTasks([...items, newItem]);
     showClearButton([...items, newItem]);
