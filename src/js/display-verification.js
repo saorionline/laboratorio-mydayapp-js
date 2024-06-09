@@ -1,14 +1,20 @@
-import { hideContent, showClearButton } from "./handle-existance.js";
+import { hideContent, noTaskImage, showClearButton } from "./handle-existance.js";
 import { updateTotalTasks } from "./renew-html.js";
 import { renderItems } from "./render-html.js";
 
+
+
 export const checkItems = () => {
+  
     const items = getStorage();
     if (!items || items.length === 0) {
-      document.addEventListener("DOMContentLoaded", hideContent);
+      document.addEventListener("DOMContentLoaded", () => {
+        checkItems();
+      });
       showClearButton(items || []);
     } else {
       renderItems(items);
+      
       updateTotalTasks(items);
       showClearButton(items);
     }
@@ -33,6 +39,7 @@ export const filterTasks = (type) => {
       list.innerHTML = "";
     }
     renderItems(filterItems);
+
     updateTotalTasks(filterItems);
   };  
 

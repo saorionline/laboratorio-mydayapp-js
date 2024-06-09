@@ -13,7 +13,7 @@ export const removeTask = (item) => {
   };
 
 export const hideContent = () => {
-    //Función para esconder las barras
+    
     const mainElement = document.querySelector("#main");
     const footerElement = document.querySelector("#footer");
     if (mainElement) {
@@ -27,11 +27,10 @@ export const hideContent = () => {
   };
   
 export const showContent = () => {
-    //Función para mostrar las barras
     const mainElement = document.querySelector("#main");
     const footerElement = document.querySelector("#footer");
     if (mainElement) {
-      mainElement.style.display = "block";
+      mainElement.style.display = "flex";
     }
     if (footerElement) {
       footerElement.style.display = "block";
@@ -48,3 +47,4 @@ export const showClearButton = (items) => {
       button.style.display = "none";
     }
   };
+

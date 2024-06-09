@@ -1,6 +1,6 @@
 import { renderItem } from "./render-html.js";
 import { updateTotalTasks } from "./renew-html.js";
-import { getStorage } from "./display-verification.js";
+import { checkItems, getStorage } from "./display-verification.js";
 import { showContent, showClearButton } from "./handle-existance.js";
 
 export const sayHello = (text) => {
@@ -30,3 +30,5 @@ export const addTask = (value) => {
     showClearButton([...items, newItem]);
   }
 };
+
+

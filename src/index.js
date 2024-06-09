@@ -12,6 +12,10 @@ import {
   filterTasks,
 } from "./js/display-verification.js";
 
+
+
+console.log(sayHello("Hi!"));
+
 const myElement = document.getElementById('card'); // Replace with actual ID
 myElement.style.display = 'flex';
 myElement.style.flexDirection = 'column';
@@ -25,7 +29,7 @@ myElement.style.border = '0.5px solid rgba(255, 255, 255, 0.20)';
 myElement.style.background = 'rgba(55, 55, 117, 0.60)';
 myElement.style.boxShadow = '0px 50px 100px 0px rgba(31, 31, 71, 0.30)';
 myElement.style.justifyContent = 'end';
-console.log(sayHello("Hello"));
+
 
 
 const imageBox = document.getElementsByClassName('container todoapp-wrapper')[0];
@@ -42,8 +46,22 @@ if (imageBox) { // Check if element exists
   console.error("Element with classes 'container todoapp-wrapper' not found");
 }
 
-document.onload = checkItems();
+/* const image = document.querySelector(".img");
+const storage = localStorage.getItem("mydayapp-js");
+const items = storage ? JSON.parse(storage) : [];
 
+// Check if there are items (any number, not just > 0)
+if (items.length > 0) {
+  image.style.display = "none"
+} else {
+  image.style.display = "block"
+} */
+
+
+window.onload = () => {
+    checkItems();
+
+};
 const input = document.querySelector(".new-todo");
 
 if (input) {

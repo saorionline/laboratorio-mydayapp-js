@@ -97,4 +97,3 @@ export const renderItems = (items) => {
     container.appendChild(fragment);
 };
   
-  
