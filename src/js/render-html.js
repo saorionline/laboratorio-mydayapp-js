@@ -5,7 +5,7 @@ export const renderItem = (item, fragment) => {
     
 
     const newListItem = document.createElement("li");
-    if (item.completed) {
+    if (item.completed !== "") {
       newListItem.className = "completed";
     }
   

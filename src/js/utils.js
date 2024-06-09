@@ -1,6 +1,6 @@
 import { renderItem } from "./render-html.js";
 import { updateTotalTasks } from "./renew-html.js";
-import { checkItems, getStorage } from "./display-verification.js";
+import { getStorage } from "./display-verification.js";
 import { showContent, showClearButton } from "./handle-existance.js";
 
 export const sayHello = (text) => {
@@ -15,7 +15,7 @@ export const addTask = (value) => {
     id: "task1",
     title: value,
     completed: false,
-  };
+  }; // Pending optimize not generating an Empty Task by default
   renderItem(newItem, fragment);
   container.appendChild(fragment);
   if (!items || items.length === 0) {

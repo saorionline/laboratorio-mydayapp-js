@@ -30,7 +30,7 @@ export const showContent = () => {
     const mainElement = document.querySelector("#main");
     const footerElement = document.querySelector("#footer");
     if (mainElement) {
-      mainElement.style.display = "flex";
+      mainElement.style.display = "block";
     }
     if (footerElement) {
       footerElement.style.display = "block";

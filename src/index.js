@@ -6,8 +6,8 @@ import {
   addTask,
 } from "./js/utils";
 
+
 import {
-  checkItems,
   clearTasks,
   filterTasks,
 } from "./js/display-verification.js";
@@ -46,22 +46,22 @@ if (imageBox) { // Check if element exists
   console.error("Element with classes 'container todoapp-wrapper' not found");
 }
 
-/* const image = document.querySelector(".img");
-const storage = localStorage.getItem("mydayapp-js");
-const items = storage ? JSON.parse(storage) : [];
 
-// Check if there are items (any number, not just > 0)
-if (items.length > 0) {
-  image.style.display = "none"
-} else {
-  image.style.display = "block"
-} */
+/* const imgElement = document.querySelector('img.img'); // Select the image element
 
+  const items = localStorage.getItem("mydayapp-js");
+  const parsedItems = items ? JSON.parse(items) : null;
+  
+  if (parsedItems) {
+    imgElement.style.display = "none"; // Hide the image if items exist
+  } else {
+    imgElement.style.display = "block"; // Show the image if no items exist
+  }
 
 window.onload = () => {
     checkItems();
 
-};
+}; */
 const input = document.querySelector(".new-todo");
 
 if (input) {
@@ -69,12 +69,18 @@ if (input) {
     if (event.key === "Enter") {
       event.preventDefault();
       if (event.target.value) {
+        const imgElement = document.querySelector('img.img'); // Select the image element
+        imgElement.style.display = "none";
         addTask(event.target.value.trim());
         input.value = "";
-      }
+      } 
     }
   });
+
 }
+
+const button = document.querySelector(".clear-completed");
+button.style.display = "none";
 
 const cleanButton = document.querySelector(".clear-completed");
 
@@ -99,6 +105,19 @@ filterButtons.forEach((button) => {
     }
   });
 });
+
+
+input.addEventListener("keydown", (ev) => {
+ 
+  const retrievedText = input.value.trim(); //trimmedTitle replace with retrievedText
+  if (retrievedText === ""){
+     console.warn("Please enter a todo item.");
+     const messageDiv = document.getElementById('error-message');
+     if (messageDiv) {
+       messageDiv.textContent = "Please enter a todo item";
+     }
+    }
+  });
 
 window.addEventListener("hashchange", function () {
   const hash = window.location.hash || "#/"; // Obtener el fragmento de la URL
