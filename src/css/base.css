@@ -66,6 +66,7 @@ body::before {
 
 .todoapp input::-webkit-input-placeholder {
 font-style: italic;
+font-size: 70%;
 font-weight: 400;
 color: rgba(0, 0, 0, 0.4);
 }
@@ -113,27 +114,31 @@ color: rgba(0, 0, 0, 0.4);
 
 /* To do List Focus*/
 .todo-list {
-margin: 0px;
-padding: 0px;
-list-style: none;
-
+  margin-left: 20px ;
+  padding: 0px;
+  list-style: none;
 }
 
 .todo-list li {
-position: relative;
-font-size: inherit;
-transform: translateY(-2px);
-
+  position: relative;
+  font-size: inherit;
+  transform: translateY(-2px);
 }
-  
+
+input.edit{
+  height: 40px;
+  margin: 0;
+  color: white;
+}
 
 .todo-list li:last-child {
-border-bottom: none;
+  border-bottom: none;
 }
 
 .todo-list li.editing {
-border-bottom: none;
-padding: 0;
+  height: 50px;
+  border-bottom: none;
+  padding: 0;
 }
 
 /*Make Dishes*/
@@ -141,7 +146,7 @@ padding: 0;
   display: block;
   width: calc(100% - 7rem);
   padding: 2px 16px;
-  margin: 1rem 0 0 5rem;
+  margin: 0rem 0 0 0rem;
   border-radius: 30px;
   border: 0.5px solid rgba(255, 255, 255, 0.30);
   background: linear-gradient(180deg, rgba(99, 106, 150, 0.40) 0%, rgba(182, 186, 214, 0.25) 100%);
@@ -154,18 +159,18 @@ display: none;
 }
 
 .todo-list li .toggle {
-text-align: center;
-width: 40px;
-/* auto, since non-WebKit browsers doesn't support input styling */
-height: auto;
-position: absolute;
-top: 0;
-bottom: 0;
-margin: auto 0;
-border: none;
-/* Mobile Safari */
--webkit-appearance: none;
-appearance: none;
+  text-align: center;
+  width: 40px;
+  /* auto, since non-WebKit browsers doesn't support input styling */
+  height: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  border: none;
+  /* Mobile Safari */
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .todo-list li .toggle {
@@ -235,8 +240,21 @@ display: block;
 display: none;
 }
 
+.todo-list li .edit:hover {
+  /* add hover styles here */
+  transform: translateY(-2px);
+  cursor: pointer;
+  border: inset 0.5px transparent;
+
+}
+
+/* Added new style for focus state to remove selection border */
+.todo-list li .edit:focus {
+  outline: none; /* Remove default outline */
+}
+
 .todo-list li.editing:last-child {
-margin-bottom: -1px;
+  margin-bottom: -1px;
 }
 
 .footer {
@@ -251,11 +269,11 @@ margin-bottom: -1px;
 
 .todo-count {
   display: flex;
-  width: 102px;
+  width: 82px;
   padding: 7px 0px;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   float: left;
   text-align: left;
   border-radius: 30px;
@@ -265,7 +283,7 @@ margin-bottom: -1px;
   }
   
 .todo-count strong {
-  font-weight: 300;
+  font-weight: 400;
 }
 
 
@@ -275,14 +293,14 @@ margin-bottom: -1px;
   list-style: none;
   position: absolute;
   right: 0;
-  left: 124px;
+  left: 104px;
   display: ruby;
 
   }
   
   .filters li {
 
-      margin: 4px
+    margin: 4px;
   }
   
   .filters li a {

@@ -1,4 +1,4 @@
-.card {
+#card {
     display: flex;
     flex-direction: column;
     width: 326px;
@@ -10,17 +10,17 @@
     box-shadow: 0px 50px 100px 0px rgba(31, 31, 71, 0.30);
     justify-content: end;
 }
-.card header {
+#card header {
     margin: 4px
 }
 
-.card container {
+#card container {
     margin: 8px    
 }
-.card footer{
+#card footer{
     margin: 24px    
 }
-.box {
+section.todoapp.box {
     display: grid;
     place-items: center;
     height: 100vh;

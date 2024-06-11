@@ -2,129 +2,137 @@ import "./css/base.css";
 import "./css/card.css";
 
 import {
-  sayHello,
-  addTask,
-} from "./js/utils";
+  delegate,
+  getURLHash,
+  insertHTML,
+  emptyElement,
+} from "./js/helpers.js";
+import { TodoStore } from "./js/store.js";
 
 
-import {
-  clearTasks,
-  filterTasks,
-} from "./js/display-verification.js";
+const Todos = new TodoStore("mydayapp-js");
 
-
-
-console.log(sayHello("Hi!"));
-
-const myElement = document.getElementById('card'); // Replace with actual ID
-myElement.style.display = 'flex';
-myElement.style.flexDirection = 'column';
-
-// Additional styles
-myElement.style.width = '326px';
-myElement.style.height = 'auto';
-myElement.style.padding = '10px';
-myElement.style.borderRadius = '20px';
-myElement.style.border = '0.5px solid rgba(255, 255, 255, 0.20)';
-myElement.style.background = 'rgba(55, 55, 117, 0.60)';
-myElement.style.boxShadow = '0px 50px 100px 0px rgba(31, 31, 71, 0.30)';
-myElement.style.justifyContent = 'end';
-
-
-
-const imageBox = document.getElementsByClassName('container todoapp-wrapper')[0];
-if (imageBox) { // Check if element exists
-  // Create the image element
-  const newImage = document.createElement('img');
-  newImage.className = "img"; // Add the class
-  newImage.src = "assets/images/notasks.png"; // Set image source
-  newImage.alt = "No tasks"; // Set alt text for accessibility
-
-  // Append the image to the container element
-  imageBox.appendChild(newImage);
-} else {
-  console.error("Element with classes 'container todoapp-wrapper' not found");
-}
-
-
-/* window.onload = () => {
-    checkItems();
-}; */
-const input = document.querySelector(".new-todo");
-
-if (input) {
-  input.addEventListener("keyup", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      if (event.target.value) {
-        const imgElement = document.querySelector('img.img'); // Select the image element
-        imgElement.style.display = "none";
-        addTask(event.target.value.trim());
-        input.value = "";
-      } 
-    }
-  });
-
-}
-const footerHidden = document.querySelector('.footer');
-footerHidden.style.display = "none";
-const button = document.querySelector(".clear-completed");
-button.style.display = "none";
-
-const cleanButton = document.querySelector(".clear-completed");
-
-if (cleanButton) {
-  cleanButton.addEventListener("click", () => {
-    clearTasks();
-  });
-}
-
-const filterButtons = document.querySelectorAll(".filters li a");
-
-filterButtons.forEach((button) => {
-  const type = button.getAttribute("href").substring(2);
-  button.addEventListener("click", () => {
-    if (!button.classList.contains("selected")) {
-      const activeButton = document.querySelector(".selected");
-      if (activeButton) {
-        activeButton.className = "";
+const App = {
+  $: {
+    input: document.querySelector(".new-todo"),
+    clear: document.querySelector(".clear-completed"),
+    list: document.querySelector(".todo-list"),
+    count: document.querySelector(".todo-count"),
+    setActiveFilter: (filter) => {
+      document
+        .querySelectorAll(".filters a")
+        .forEach((el) => el.classList.remove("selected")),
+        document
+          .querySelector(`.filters [href="#/${filter}"]`)
+          .classList.add("selected");
+    },
+    showMain: (show) =>
+      (document.querySelector(".main").style.display = show ? "block" : "none"),
+    showClear: (show) =>
+      (document.querySelector(".clear-completed").style.display = show
+        ? "block"
+        : "none"),
+    showFooter: (show) =>
+      (document.querySelector(".footer").style.display = show
+        ? "block"
+        : "none"),
+    displayCount: (count) => {
+      emptyElement(App.$.count);
+      insertHTML(
+        App.$.count,
+        `
+				<strong>${count}</strong>
+				${count === 1 ? "item" : "items"} left
+			`
+      );
+    },
+  },
+  init() {
+    Todos.addEventListener("save", App.render);
+    App.filter = getURLHash();
+    window.addEventListener("hashchange", () => {
+      App.filter = getURLHash();
+      App.render();
+    });
+    App.$.input.addEventListener("keyup", (e) => {
+        const title = e.target.value.trim();
+        if (e.key === "Enter" && title) {
+          Todos.add({
+            title,
+            completed: false,
+            id: "id_" + Date.now(),
+          });
+        App.$.input.value = "";
+        }
+    });
+    App.$.clear.addEventListener("click", () => {
+      Todos.clearCompleted();
+    });
+    App.bindTodoEvents();
+    App.render();
+  },
+  todoEvent(event, selector, handler) {
+    delegate(App.$.list, selector, event, (e) => {
+      let $el = e.target.closest("[data-id]");
+      handler(Todos.get($el.dataset.id), $el, e);
+    });
+  },
+  bindTodoEvents() {
+    App.todoEvent("click", ".destroy", (todo) => Todos.remove(todo));
+    App.todoEvent("click", ".toggle", (todo) => Todos.toggle(todo));
+    App.todoEvent("dblclick", "label", (_, $li) => {
+      $li.classList.add("editing");
+      $li.querySelector(".edit").focus();
+    });
+    App.todoEvent("keyup", ".edit", (todo, $li, e) => {
+      let $input = $li.querySelector(".edit");
+      const newTitle = $input.value.trim();
+      if (e.key === "Enter" && newTitle) {
+        Todos.update({ ...todo, title: newTitle });
       }
-      button.className = "selected";
-      filterTasks(type);
+      if (e.key === "Escape") {
+        $input.value = todo.title;
+        App.render();
+      }
+    });
+    App.todoEvent("blur", ".edit", (todo, $li) => {
+      const title = $li.querySelector(".edit").value;
+      Todos.update({ ...todo, title });
+    });
+  },
+  createTodoItem(todo) {
+    const li = document.createElement("li");
+    li.dataset.id = todo.id;
+    if (todo.completed) {
+      li.classList.add("completed");
     }
-  });
-});
+    insertHTML(
+      li,
+      `
+			<div class="view">
+				<input class="toggle" type="checkbox" ${todo.completed ? "checked" : ""}>
+				<label></label>
+				<button class="destroy"></button>
+			</div>
+			<input class="edit">
+		`
+    );
+    li.querySelector("label").textContent = todo.title;
+    li.querySelector(".edit").value = todo.title;
+    return li;
+  },
+  render() {
+    const count = Todos.all().length;
+    App.$.setActiveFilter(App.filter);
+    emptyElement(App.$.list);
+    Todos.all(App.filter).forEach((todo) => {
+      App.$.list.appendChild(App.createTodoItem(todo));
+    });
+    App.$.showMain(count);
+    App.$.showFooter(count);
+    App.$.showClear(Todos.hasCompleted());
+    App.$.displayCount(Todos.all("active").length);
+  },
+};
 
-
-input.addEventListener("keydown", (ev) => {
- 
-  const retrievedText = input.value.trim(); //trimmedTitle replace with retrievedText
-  if (retrievedText === ""){
-     console.warn("Please enter a todo item.");
-     const messageDiv = document.getElementById('error-message');
-     if (messageDiv) {
-       messageDiv.textContent = "Please enter a todo item";
-     }
-    }
-  });
-
-window.addEventListener("hashchange", function () {
-  const hash = window.location.hash || "#/"; // Obtener el fragmento de la URL
-  const type = hash.substring(2);
-  const activeButton = document.querySelector(".selected");
-  if (activeButton) {
-    activeButton.className = "";
-  }
-  const link = document.querySelector(`a[href="${hash}"]`);
-  link.className = "selected";
-  filterTasks(type);
-  // Aquí puedes poner tu lógica para manejar el cambio de ruta
-  console.log("La ruta ha cambiado a", hash);
-});
-
-function clearLocalStorage() {
-  localStorage.removeItem("mydayapp-js");
-}
-
-// Call the function whenever you want to reset the tasks
-clearLocalStorage();
+App.init();
